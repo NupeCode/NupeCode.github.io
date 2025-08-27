@@ -1,0 +1,152 @@
+/* ===== Page layout ===== */
+html, body {
+  height: 100%;
+  background: radial-gradient(1200px 800px at 50% -20%, #1b222b 0%, var(--bg) 50%, var(--bg) 100%);
+  color: var(--text);
+  background-color: rgb(255, 244, 229);
+  margin: 0;
+  font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+.container {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;              /* horizontal center */
+  justify-content: flex-start;
+  gap: clamp(16px, 3vw, 28px);
+  padding: clamp(16px, 4vw, 48px) 16px 64px;
+  box-sizing: border-box;
+}
+
+.logo {
+  display: flex;
+  justify-content: center; /* horizontally centers */
+  align-items: center;     /* vertically centers if you give height */
+  margin: 10px 0;          /* spacing above/below */
+}
+  
+.logo img {
+  max-width: 35%;  /* keep it responsive */
+
+}
+
+
+/* ===== Menu (vertical list of images) ===== */
+.menu {
+  width: min(720px, 92vw);
+}
+.menu ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.menu-item {
+  border-radius: 12px;
+  border-style: none;
+  background: var(--card);
+  overflow: hidden;
+  transition: border-color .2s ease, transform .15s ease;
+}
+.menu-item:hover {
+  background-color: #d0d0d0;
+  transform: translateY(-1px);
+}
+
+/* Toggle button */
+.menu-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 12px;
+}
+/* style.css */
+
+.menu-toggle .indicator {
+  width: 16px;       /* adjust size */
+  height: 16px;      /* adjust size */
+  margin-right: 8px; /* spacing between icon and thumbnail */
+  flex-shrink: 0;    /* keep it from squashing */
+}
+
+.menu-toggle:hover {
+  background-color: #d0d0d0;
+}
+
+/* Thumbnail image */
+.thumb img {
+  max-width: 100%;
+  height: 10ch;
+  object-fit: cover;
+}
+
+/* Panel (collapsed by default) */
+.panel-inner {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 14px 16px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height .35s ease, opacity .2s ease;
+}
+.menu-item.open .panel-inner {
+  max-height: 420px;
+  opacity: 1;
+}
+
+.panel-content {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 16px;
+}
+.panel-content img {
+  width: 140px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.panel-content p {
+  margin: 0;
+  color: #254370;
+}
+
+
+/* ===== Main content area (placeholder) ===== */
+.content {
+  width: min(820px, 94vw);
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius);
+  padding: clamp(16px, 3vw, 28px);
+  text-align: center;
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce){
+  .menu-item, .menu-item > summary::before, .panel-inner { 
+    transition: none !important;
+  }
+}
+
+.link-block {
+  margin-top: 10px;
+}
+
+.link-block a {
+  color: var(--accent, #4c0611); /* uses your accent color if defined */
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link-block a:hover {
+  text-decoration: underline;
+}
