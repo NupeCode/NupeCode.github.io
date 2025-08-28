@@ -1,107 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <link rel="stylesheet" type="text/css" href="css/bg-floaters.css">
 
-    <title>Nupe Code</title>
+
+  <title>Nupe Code</title>
 </head>
 
-<div class="logo">
-    <img src="images/nupe_code_logo2_transparent.png" alt="comapany logo">
-</div>
 
 <body>
-    <main class="container">
 
-      <h3>
-        Modern Solutions for Modern problems
-      </h3>
+  <div class="bg-floaters" aria-hidden="true"></div>
 
-        <nav class="menu" aria-label="Primary">
-            <ul>
-              <!-- About -->
-              <li class="menu-item">
-                <button class="menu-toggle">
-                  <span class="thumb">
-                    <img src="images/nc_about.png" alt="About">
-                  </span>
-                </button>
-                <div class="panel">
-                  <div class="panel-inner">
-                    <div class="panel-content">
-                      <img src="images/nc_about.png" alt="About image">
-                      <p>
-                        Placeholder content about your company. Replace with your real copy,
-                        bullet points, or links as needed.
-                      </p>
-                      <div class="link-block">
-                        <a href="comingsoon.html">Learn more about us →</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-          
-              <!-- Services -->
-              <li class="menu-item">
-                <button class="menu-toggle">
-                  <span class="thumb">
-                    <img src="images/nc_services.png" alt="Services">
-                  </span>
-                </button>
-                <div class="panel">
-                  <div class="panel-inner">
-                    <div class="panel-content">
-                      <img src="images/nc_services.png" alt="Services image">
-                      <p>
-                        Placeholder description of services. Swap in your service list,
-                        pricing notes, or a short overview.
-                      </p>
-                      <div class="link-block">
-                        <a href="comingsoon.html">View our services →</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-          
-              <!-- Contact Us -->
-              <li class="menu-item">
-                <button class="menu-toggle">
-                  <span class="thumb">
-                    <img src="images/nc_contact.png" alt="Contact Us">
-                  </span>
-                </button>
-                <div class="panel">
-                  <div class="panel-inner">
-                    <div class="panel-content">
-                      <img src="images/nc_contact.png" alt="Contact image">
-                      <p>
-                        Placeholder contact info. Add your form link, email, phone,
-                        or office hours here.
-                      </p>
-                      <div class="link-block">
-                        <a href="comingsoon.html">Get in touch →</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-        </nav>
-          
+  <div class="logo">
+    <img src="images/nupe_code_logo2_transparent.png" alt="comapany logo">
+  </div>
 
-            <!-- Main content placeholder -->
-        <section class="content" aria-labelledby="content-title">
-            <p>
-                © Nupe Code. 
-            </p>
-        </section>
-    </main>
-    <script src="js/menu.js"></script>
+  <!-- Back button (hidden by default) -->
+  <button class="back-button" type="button" hidden>← Back</button>
+
+  <!-- Focus stage -->
+  <section class="focus-stage" aria-hidden="true">
+    <aside class="focus-left">
+      <img class="focus-image" src="" alt="">
+      <nav class="focus-toc" aria-label="On this page">
+        <h3>On this page</h3>
+        <ul class="toc-list"><!-- built by JS --></ul>
+      </nav>
+    </aside>
+
+    <article class="focus-right">
+      <div class="focus-content"><!-- loaded HTML goes here --></div>
+    </article>
+  </section>
+
+  <main class="container">
+
+    <h3>
+      Modern Solutions for Modern Problems
+    </h3>
+
+    <nav class="menu" aria-label="Primary">
+        <ul>
+          <!-- About -->
+          <li class="menu-item" data-content-url="content/about.html">
+            <button class="menu-toggle">
+              <span class="thumb">
+                <img src="images/nc_about.png" alt="About">
+              </span>
+            </button>
+            <div class="panel">
+              <div class="panel-inner">
+                <div class="panel-content">
+                  <img src="images/about_icon.png" alt="About image">
+                  <p>
+                    Placeholder content about the company. Replace with the real copy,
+                    bullet points, or links as needed.
+                  </p>
+
+                  <!-- New: focus button -->
+                  <div class="actions">
+                    <button class="focus-button" type="button">Learn more about us →</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </li>
+      
+          <!-- Services -->
+          <li class="menu-item" data-content-url="content/services.html">
+            <button class="menu-toggle">
+              <span class="thumb">
+                <img src="images/nc_services.png" alt="Services">
+              </span>
+            </button>
+            <div class="panel">
+              <div class="panel-inner">
+                <div class="panel-content">
+                  <img src="images/services_icon.png" alt="Services image">
+                  <p>
+                    Placeholder description of services. Swap in the service list,
+                    pricing notes, or a short overview.
+                  </p>
+
+                  <!-- New: focus button -->
+                  <div class="actions">
+                    <button class="focus-button" type="button">Explore our services →</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </li>
+      
+          <!-- Contact Us -->
+          <li class="menu-item">
+            <button class="menu-toggle">
+              <span class="thumb">
+                <img src="images/nc_contact.png" alt="Contact Us">
+              </span>
+            </button>
+            <div class="panel">
+              <div class="panel-inner">
+                <div class="panel-content">
+                  <img src="images/contact_icon.png" alt="Contact image">
+                  <p>
+                    Placeholder contact info. Add the form link, email, phone,
+                    or office hours here.
+                  </p>
+
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+    </nav>
+        
+
+    <!-- Main content placeholder -->
+    <section class="content" aria-labelledby="content-title">
+        <p>
+          © Nupe Code. 
+        </p>
+    </section>
+  </main>
+  <script src="js/menu.js"></script>
+  <script src="js/floaters.js"></script>
 
 </body>
 
