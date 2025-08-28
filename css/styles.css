@@ -163,7 +163,7 @@ h3 {
 /* ===== Main content area (placeholder) ===== */
 .content {
   width: min(820px, 94vw);
-  background: var(--card);
+  background: none;
   border: 1px;
   border-radius: var(--radius);
   padding: clamp(16px, 3vw, 28px);
