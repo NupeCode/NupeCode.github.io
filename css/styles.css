@@ -1,15 +1,15 @@
 :root {
   /* Core palette */
-  --bg: #fdfaf6;           /* background base */
+  --bg: #e9e9e9;           /* background base */
   --bg-gradient-dark: #1b222b; /* for radial gradient */
   --card: rgb(168, 178, 168);         /* card/panel backgrounds */
   --text: #1e1e1e;         /* main body text */
-  --muted-text: #254370;   /* muted/secondary text */
-  --border: rgba(0,0,0,0.1);
+  --muted-text: rgb(239, 239, 239);   /* muted/secondary text */
+  --border: rgb(0, 0, 0);
   --menu: rgb(199, 208, 199);
 
   /* Accent colors */
-  --accent: rgb(136, 145, 136);       /* buttons, links, highlights */
+  --accent: rgb(81, 88, 81);       /* buttons, links, highlights */
   --accent-hover: rgb(168, 178, 168);
   --danger: #891d1d;
 
@@ -30,6 +30,23 @@ html, body {
 h3 {
   font-style: normal;
 }
+
+p {
+  font-style: italic;
+}
+
+button {
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+button:active {
+  transform: scale(0.95); /* slight shrink when pressed */
+}
+
 
 .container {
   min-height: 100%;
@@ -148,11 +165,12 @@ h3 {
   gap: 16px;
 }
 .panel-content img {
-  width: 140px;
-  height: 100px;
+  width: 128px;
+  height: 128px;
   object-fit: cover;
   border-radius: 12px;
   border: 1px;
+  margin-bottom: 20px;
 }
 .panel-content p {
   margin: 0;
@@ -310,8 +328,11 @@ body.focused .back-button[hidden] { display: inline-block !important; } /* ensur
   color: #ffffff;
   font-weight: 700;
   cursor: pointer;
+
 }
-.focus-button:hover { filter: brightness(0.95); }
+.focus-button:hover { 
+  filter: brightness(0.95);
+}
 
 /* Optional: make indicator icon smaller (from your earlier request) */
 .menu-toggle .indicator {
@@ -319,4 +340,16 @@ body.focused .back-button[hidden] { display: inline-block !important; } /* ensur
   height: 16px;
   margin-right: 8px;
   flex-shrink: 0;
+}
+
+.email {
+  text-decoration: none;
+  color: var(--danger);
+
+}
+
+.email:hover {
+  text-decoration: none;
+  transform: scale(1.1); 
+  
 }

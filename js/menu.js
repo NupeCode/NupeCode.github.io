@@ -92,25 +92,43 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function enterFocusWithItem(item) {
-    const largeImg = item.querySelector(".panel-content > img");
-    const thumbImg = item.querySelector(".thumb img");
-    const src = (largeImg && largeImg.getAttribute("src")) || (thumbImg && thumbImg.getAttribute("src"));
-    const alt = (largeImg && largeImg.getAttribute("alt")) || (thumbImg && thumbImg.getAttribute("alt")) || "";
-    const contentUrl = item.getAttribute("data-content-url");
-
+    // Prefer big focus image sources from data attributes:
+    const focusSrc    = item.getAttribute("data-focus-src");
+    const focusSrcset = item.getAttribute("data-focus-srcset");
+    const focusSizes  = item.getAttribute("data-focus-sizes");
+  
+    // Fallbacks if data attrs are missing:
+    const largeInPanel = item.querySelector(".panel-content > img");
+    const thumbImg     = item.querySelector(".thumb img");
+  
+    const src = focusSrc
+      || (largeInPanel && largeInPanel.getAttribute("src"))
+      || (thumbImg && thumbImg.getAttribute("src"));
+  
+    const alt = (largeInPanel && largeInPanel.getAttribute("alt"))
+      || (thumbImg && thumbImg.getAttribute("alt"))
+      || "";
+  
     if (!src) return;
+  
+    // Populate focus image (supports responsive if provided)
+    focusImage.removeAttribute("srcset");
+    focusImage.removeAttribute("sizes");
     focusImage.src = src;
+    if (focusSrcset) focusImage.setAttribute("srcset", focusSrcset);
+    if (focusSizes)  focusImage.setAttribute("sizes", focusSizes);
     focusImage.alt = alt;
-
+  
+    // Enter focused mode
     document.body.classList.add("focused");
     focusStage.setAttribute("aria-hidden", "false");
     backBtn.hidden = false;
-
+  
     // Stop floaters while focused
     if (window.Floaters) window.Floaters.stop();
-
-
-    // Load external HTML into the right column
+  
+    // Load external HTML on right
+    const contentUrl = item.getAttribute("data-content-url");
     if (contentUrl) {
       focusContent.innerHTML = "<p>Loading…</p>";
       loadContentIntoFocus(contentUrl).catch(err => {
@@ -121,10 +139,9 @@ document.addEventListener("DOMContentLoaded", () => {
       focusContent.innerHTML = "<p>No content URL provided for this item.</p>";
       tocList.innerHTML = "";
     }
-
-    // Scroll to top for a clean view
+  
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  }  
 
   function exitFocus() {
     document.body.classList.remove("focused");
