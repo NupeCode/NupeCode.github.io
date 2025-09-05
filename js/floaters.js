@@ -82,9 +82,15 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Optional: pause when the tab is hidden to save CPU
     document.addEventListener("visibilitychange", () => {
-      if (document.hidden) stop();
-      else start();
-    });
+      if (document.hidden) {
+        stop();
+      } else {
+        // Only resume if we're NOT in focus mode
+        if (!document.body.classList.contains("focused")) {
+          start();
+        }
+      }
+    });    
   
     // Optional: throttle spawns on super small screens
     const mq = window.matchMedia("(max-width: 480px)");

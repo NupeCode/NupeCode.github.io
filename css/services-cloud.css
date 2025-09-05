@@ -1,0 +1,122 @@
+/* ============= Service “bubble” cloud ============= */
+:root{
+    --cloud-height: 220px;                 /* container height */
+    --cloud-text: var(--text, #1e1e1e);
+    --cloud-accent: var(--accent, #5cc8ff);
+    --cloud-accent-contrast: #ffffff;      /* hover text color */
+  }
+  
+  /* Container */
+  .service-cloud {
+    margin: 16px 0 24px; 
+    background-color: e9e9e9;
+  }
+  .service-cloud:hover {
+    cursor:crosshair;
+  }
+  
+  .cloud {
+    position: relative;
+    height: var(--cloud-height);
+    overflow: hidden;
+    border-radius: var(--radius, 12px);
+    /* very subtle background – remove if you want fully transparent */
+    background: rgba(0,0,0,0.02);
+  }
+  
+  /* Bubble base (absolutely positioned “words”) */
+  .bubble {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%); /* center each bubble on its coords */
+    pointer-events: auto;             /* allow hover */
+    user-select: none;
+    will-change: transform;
+  }
+  
+  /* Drifting wrapper (we animate this so hover scaling can layer on top) */
+  .bubble .anim {
+    display: inline-block;
+    animation: drift-a 12s ease-in-out infinite;
+    will-change: transform;
+  }
+  
+  /* Word label: no border, no pill; hover grows & highlights */
+  .bubble .label {
+    display: inline-block;
+    color: var(--cloud-text);
+    line-height: 1;
+    letter-spacing: .2px;
+    transition: transform .18s ease, color .18s ease, text-shadow .18s ease;
+  }
+  
+  .bubble:hover .label,
+  .bubble:focus-within .label {
+    transform: scale(1.12);
+    color: var(--cloud-accent-contrast);
+    text-shadow: 0 4px 12px rgba(0,0,0,.18);
+  }
+  
+  /* Word sizes */
+  .bubble.w1 .label { font-size: .84rem; }
+  .bubble.w2 .label { font-size: .95rem; }
+  .bubble.w3 .label { font-size: 1.08rem; }
+  .bubble.w4 .label { font-size: 1.22rem; }
+  .bubble.w5 .label { font-size: 1.36rem; }
+  
+  /* Color accent on hover via parent state (optional) */
+  .bubble:hover .anim,
+  .bubble:focus-within .anim { filter: drop-shadow(0 4px 10px rgba(0,0,0,.12)); }
+  .bubble:hover .label { background: var(--cloud-accent); -webkit-background-clip: text; background-clip: text; }
+  
+  /* Keyframes: gentle wandering path */
+  @keyframes drift-a {
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(10px, -8px); }
+    50%  { transform: translate(-12px, 10px); }
+    75%  { transform: translate(8px, -6px); }
+    100% { transform: translate(0, 0); }
+  }
+  @keyframes drift-b {
+    0%   { transform: translate(0, 0); }
+    20%  { transform: translate(-8px, 12px); }
+    45%  { transform: translate(10px, 6px); }
+    70%  { transform: translate(-6px, -10px); }
+    100% { transform: translate(0, 0); }
+  }
+  @keyframes drift-c {
+    0%   { transform: translate(0, 0); }
+    30%  { transform: translate(12px, 6px); }
+    55%  { transform: translate(-10px, -12px); }
+    80%  { transform: translate(6px, 10px); }
+    100% { transform: translate(0, 0); }
+  }
+  
+  /* Assign unique positions, durations, and drift variants per bubble */
+  .cloud .bubble:nth-child(1)  { left: 18%; top: 24%; }
+  .cloud .bubble:nth-child(2)  { left: 36%; top: 18%; }
+  .cloud .bubble:nth-child(3)  { left: 62%; top: 22%; }
+  .cloud .bubble:nth-child(4)  { left: 78%; top: 36%; }
+  .cloud .bubble:nth-child(5)  { left: 72%; top: 64%; }
+  .cloud .bubble:nth-child(6)  { left: 56%; top: 72%; }
+  .cloud .bubble:nth-child(7)  { left: 34%; top: 70%; }
+  .cloud .bubble:nth-child(8)  { left: 20%; top: 58%; }
+  .cloud .bubble:nth-child(9)  { left: 12%; top: 40%; }
+  .cloud .bubble:nth-child(10) { left: 48%; top: 50%; }
+  .cloud .bubble:nth-child(11) { left: 84%; top: 52%; }
+  .cloud .bubble:nth-child(12) { left: 44%; top: 80%; }
+  
+  /* Stagger animation variants + timings */
+  .cloud .bubble:nth-child(odd)  .anim { animation-name: drift-a; animation-duration: 13s; animation-delay: -2s; }
+  .cloud .bubble:nth-child(even) .anim { animation-name: drift-b; animation-duration: 15s; animation-delay: -4s; }
+  .cloud .bubble:nth-child(6n)   .anim { animation-name: drift-c; animation-duration: 17s; animation-delay: -6s; }
+  .cloud .bubble:nth-child(5n)   .anim { animation-duration: 19s; }
+  .cloud .bubble:nth-child(7n)   .anim { animation-duration: 21s; }
+  
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    .bubble .anim { animation: none !important; }
+    .bubble .label { transform: none !important; }
+  }
+  
