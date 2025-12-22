@@ -48,14 +48,27 @@
       <img src="images/nupe_code_logo2_transparent.png" alt="comapany logo">
     </div>
 
-    <h3>
-      Modern Solutions for Modern Problems
-    </h3>
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">Nupe Code · Software consultancy</p>
+      <h1 id="hero-title">Modern solutions for modern problems.</h1>
+      <p class="lead">
+        At Nupe Code our priority is to provide affordable software solutions and ensure you get what you asked for, when you asked for it. Say goodbye to uncertain timelines &amp; unreliable software!
+      </p>
+      <div class="hero-actions">
+        <a class="btn primary" href="mailto:nupecode@gmail.com">Book a consult</a>
+        <button class="btn ghost" type="button" data-open-menu="services">View services &amp; pricing</button>
+      </div>
+      <ul class="hero-points">
+        <li>Strategy-first engagements before you commit to build</li>
+        <li>Incremental delivery with demos, QA, and documentation</li>
+        <li>Direct access to the team and transparent communication</li>
+      </ul>
+    </section>
 
     <nav class="menu" aria-label="Primary">
         <ul>
           <!-- About -->
-          <li class="menu-item" data-content-url="content/about.html">
+          <li class="menu-item" id="menu-about" data-content-url="content/about.html">
             <button class="menu-toggle">
               <span class="thumb">
                 <img src="images/nc_about.png" alt="About">
@@ -66,7 +79,7 @@
                 <div class="panel-content">
                   <img src="images/about_icon.png" alt="About image">
                   <p>
-                    Nupe Code is a software firm that exists to empower Individuals, Organisations & Businesses
+                    Nupe Code exists to empower Individuals, Organisations & Businesses
                     By enabling them to bring their Ideas to life. 
                   </p>
 
@@ -81,7 +94,7 @@
           </li>
       
           <!-- Services -->
-          <li class="menu-item" data-content-url="content/services.html">
+          <li class="menu-item" id="menu-services" data-content-url="content/services.html">
             <button class="menu-toggle">
               <span class="thumb">
                 <img src="images/nc_services.png" alt="Services">
@@ -108,7 +121,7 @@
           </li>
       
           <!-- Contact Us -->
-          <li class="menu-item">
+          <li class="menu-item" id="menu-contact" data-content-url="content/contact.html">
             <button class="menu-toggle">
               <span class="thumb">
                 <img src="images/nc_contact.png" alt="Contact Us">
@@ -131,6 +144,16 @@
     </nav>
         
 
+    <section class="cta-strip" aria-labelledby="cta-strip-title">
+      <div class="cta-copy">
+        <h2 id="cta-strip-title">Have a project or idea?</h2>
+        <p>Send three bullets about your goals and we’ll reply within two business days.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn primary" href="mailto:nupecode@gmail.com">Start a conversation</a>
+      </div>
+    </section>
+
     <!-- Main content placeholder -->
     <section class="content" aria-labelledby="content-title">
         <p>
@@ -138,6 +161,21 @@
         </p>
     </section>
   </main>
+
+  <!-- Desktop overlay modal for menu items -->
+  <div class="modal-overlay" data-modal hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-body">
+        <aside class="modal-toc" aria-label="On this page">
+          <button class="modal-back" type="button">← Back</button>
+          <h3 id="modal-title">Details</h3>
+          <ul class="modal-toc-list"><!-- built by JS --></ul>
+        </aside>
+        <article class="modal-content-area"><!-- loaded HTML --></article>
+      </div>
+    </div>
+  </div>
+
   <script src="js/menu.js"></script>
   <script src="js/floaters.js"></script>
 

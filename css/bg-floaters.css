@@ -1,9 +1,13 @@
 /* Background floater layer */
 .bg-floaters {
     position: fixed;
-    inset: 0;                  /* top:0; right:0; bottom:0; left:0 */
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1100px, 92vw);  /* keep floaters behind main content column */
     pointer-events: none;      /* never block clicks */
-    z-index: 0;                /* behind your UI; make sure main UI has a higher stacking context if needed */
+    z-index: -1;                /* behind your UI; make sure main UI has a higher stacking context if needed */
     overflow: hidden;
   }
   

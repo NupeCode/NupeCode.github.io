@@ -34,8 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
         el.alt = "";
         const size = randInt(SIZE_PX[0], SIZE_PX[1]);
         el.style.width = `${size}px`;
-        el.style.left = `${rand(24, window.innerWidth - 24)}px`;
-        el.style.top = `${rand(24, window.innerHeight - 24)}px`;
+
+        // Keep floaters within the centered layer (aligned with main content)
+        const bounds = layer.getBoundingClientRect();
+        const xMax = Math.max(bounds.width - 24, 24);
+        const yMax = Math.max(bounds.height - 24, 24);
+        el.style.left = `${rand(24, xMax)}px`;
+        el.style.top = `${rand(24, yMax)}px`;
         layer.appendChild(el);
         alive++;
 

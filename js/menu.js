@@ -10,6 +10,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const focusImage = document.querySelector(".focus-image");
   const focusContent = document.querySelector(".focus-content");
   const tocList = document.querySelector(".toc-list");
+  const modalOverlay = document.querySelector("[data-modal]");
+  const modalBody = document.querySelector(".modal-body");
+  const modalTocList = document.querySelector(".modal-toc-list");
+  const modalContentArea = document.querySelector(".modal-content-area");
+  const modalBackBtn = document.querySelector(".modal-back");
+  const desktopQuery = window.matchMedia("(min-width: 992px)");
+
+  function openMenuItemByKey(key) {
+    if (!key) return;
+    const item = document.querySelector(`#menu-${key}`);
+    if (!item) return;
+    const button = item.querySelector(".menu-toggle");
+    if (button && !item.classList.contains("open")) {
+      button.click();
+    }
+    item.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   // --- Expand/collapse with plus/minus ---
   items.forEach((item, index) => {
@@ -36,7 +53,30 @@ document.addEventListener("DOMContentLoaded", () => {
     indicator.src = item.classList.contains("open") ? MINUS_SRC : PLUS_SRC;
 
     // Toggle open/close
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (e) => {
+      // Desktop: open modal for Contact item
+      if (desktopQuery.matches && modalOverlay && modalContentArea && item.id === "menu-contact") {
+        e.preventDefault();
+        const label = item.querySelector(".thumb img")?.alt || "Details";
+        const contentUrl = item.getAttribute("data-content-url");
+
+        if (modalTocList) modalTocList.innerHTML = "";
+        modalContentArea.innerHTML = `<p class="lead">Loading ${label}…</p>`;
+
+        if (contentUrl) {
+          loadContentIntoModal(contentUrl).catch(err => {
+            modalContentArea.innerHTML = `<p style="color:#b42318">Could not load content.<br>${err.message}</p>`;
+            if (modalTocList) modalTocList.innerHTML = "";
+          });
+        } else {
+          modalContentArea.innerHTML = `<p>No content available for ${label}.</p>`;
+        }
+
+        modalOverlay.hidden = false;
+        document.body.classList.add("modal-open");
+        return;
+      }
+
       const willOpen = !item.classList.contains("open");
       if (ONE_OPEN && willOpen) {
         document.querySelectorAll(".menu .menu-item.open").forEach(openItem => {
@@ -54,6 +94,38 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // --- Triggers that jump to a menu item ---
+  document.querySelectorAll("[data-open-menu]").forEach(trigger => {
+    trigger.addEventListener("click", () => {
+      const key = trigger.getAttribute("data-open-menu");
+      openMenuItemByKey(key);
+    });
+  });
+
+  // --- Modal interactions (kept available for future use) ---
+  function closeModal() {
+    if (!modalOverlay) return;
+    modalOverlay.hidden = true;
+    document.body.classList.remove("modal-open");
+    if (modalContentArea) modalContentArea.innerHTML = "";
+    if (modalTocList) modalTocList.innerHTML = "";
+  }
+
+  if (modalOverlay) {
+    modalOverlay.hidden = true; // keep closed by default
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) closeModal();
+    });
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modalOverlay?.hidden) closeModal();
+  });
+
+  if (modalBackBtn) {
+    modalBackBtn.addEventListener("click", closeModal);
+  }
+
   // --- Focused view ---
   function slugify(text) {
     return text
@@ -62,6 +134,32 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace(/[\s\.\,/\\]+/g, "-")
       .replace(/[^a-z0-9\-]/g, "")
       .replace(/\-+/g, "-");
+  }
+
+  async function loadContentIntoModal(url) {
+    if (!modalContentArea || !modalTocList) return;
+    const res = await fetch(url, { credentials: "same-origin" });
+    if (!res.ok) throw new Error(`Failed to load ${url}: ${res.status}`);
+    const html = await res.text();
+    modalContentArea.innerHTML = html;
+    modalTocList.innerHTML = "";
+
+    const headings = modalContentArea.querySelectorAll("h2, h3");
+    headings.forEach(h => {
+      if (!h.id) h.id = slugify(h.textContent || "section");
+      const li = document.createElement("li");
+      li.className = h.tagName.toLowerCase() === "h3" ? "toc-sub" : "toc-top";
+      const a = document.createElement("a");
+      a.href = `#${h.id}`;
+      a.textContent = h.textContent || "Section";
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const target = modalContentArea.querySelector(`#${h.id}`);
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      li.appendChild(a);
+      modalTocList.appendChild(li);
+    });
   }
 
   async function loadContentIntoFocus(url) {
@@ -160,7 +258,32 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".menu .focus-button").forEach(btn => {
     btn.addEventListener("click", (e) => {
       const item = e.currentTarget.closest(".menu-item");
-      if (item) enterFocusWithItem(item);
+      if (!item) return;
+
+      // Desktop: open modal with content + TOC
+      if (desktopQuery.matches && modalOverlay && modalContentArea) {
+        const label = item.querySelector(".thumb img")?.alt || "Details";
+        const contentUrl = item.getAttribute("data-content-url");
+
+        if (modalTocList) modalTocList.innerHTML = "";
+        modalContentArea.innerHTML = `<p class="lead">Loading ${label}…</p>`;
+
+        if (contentUrl) {
+          loadContentIntoModal(contentUrl).catch(err => {
+            modalContentArea.innerHTML = `<p style="color:#b42318">Could not load content.<br>${err.message}</p>`;
+            if (modalTocList) modalTocList.innerHTML = "";
+          });
+        } else {
+          modalContentArea.innerHTML = `<p>No content available for ${label}.</p>`;
+        }
+
+        modalOverlay.hidden = false;
+        document.body.classList.add("modal-open");
+        return;
+      }
+
+      // Mobile/tablet: keep focused view behavior
+      enterFocusWithItem(item);
     });
   });
 
