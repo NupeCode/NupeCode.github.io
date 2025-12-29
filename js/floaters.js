@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // Add more tiny assets if you like (e.g., icons): "images/floaters/icon1.svg"
     ];
   
-    const MAX_FLOATERS = 12;         // cap on-screen at once
-    const SPAWN_EVERY_MS = 1200;     // how often to attempt a spawn
-    const SIZE_PX = [24, 48];        // min/max size
+    const MAX_FLOATERS = 24;         // cap on-screen at once (doubled)
+    const SPAWN_EVERY_MS = 600;      // how often to attempt a spawn (faster)
+    const SIZE_PX = [16, 32];        // min/max size (smaller)
     const LIFETIME_MS = [6000, 12000]; // min/max total animation time
     const DRIFT_PX = [120, 320];     // how far they drift overall
     const WAYPOINTS = [2, 4];        // number of midpoints (random path complexity)

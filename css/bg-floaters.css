@@ -7,7 +7,7 @@
     transform: translateX(-50%);
     width: min(1100px, 92vw);  /* keep floaters behind main content column */
     pointer-events: none;      /* never block clicks */
-    z-index: -1;                /* behind your UI; make sure main UI has a higher stacking context if needed */
+    z-index: 0;                /* sit above the page background but behind main UI */
     overflow: hidden;
   }
   

@@ -1,7 +1,7 @@
 :root {
   /* Core palette */
-  --bg: #f4f6f9;
-  --bg-gradient-dark: #dce3ec;
+  --bg: #ffffff;
+  --bg-gradient-dark: #ffffff;
   --card: #ffffff;
   --text: #0f172a;
   --muted-text: #475467;
@@ -70,6 +70,8 @@ button:active {
   box-sizing: border-box;
   max-width: 1100px;
   margin: 0 auto;
+  position: relative; /* ensure content stays above background floaters */
+  z-index: 1;
 }
 
 .logo {
